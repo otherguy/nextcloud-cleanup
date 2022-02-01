@@ -37,7 +37,6 @@ jobs:
           images: |
             otherguy/nextcloud-cleanup
           tags: |
-            type=edge,branch=main
             type=sha
             type=semver,pattern={{version}}
       # - name: Send GitHub Action data to Slack
