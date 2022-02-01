@@ -37,8 +37,8 @@ jobs:
           images: |
             otherguy/nextcloud-cleanup
           tags: |
+            # minimal (short sha)
             type=sha
-            type=semver,pattern={{version}}
       # - name: Send GitHub Action data to Slack
       #   uses: act10ns/slack@v1.2.2
       #   env:
