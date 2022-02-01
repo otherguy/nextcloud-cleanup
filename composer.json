@@ -1,0 +1,20 @@
+{
+    "name": "otherguy/nextcloud-cleanup",
+    "type": "project",
+    "authors": [
+      {
+          "name": "Alexander Graf",
+          "email": "alex@otherguy.io"
+      }
+    ],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Otherguy\\NextcloudCleanup\\": "src/"
+        }
+    },
+    "require": {
+        "aws/aws-sdk-php": "^3.209",
+        "voku/simple-mysqli": "^8.3"
+    }
+}
