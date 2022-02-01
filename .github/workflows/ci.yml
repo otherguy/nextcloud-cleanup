@@ -24,12 +24,11 @@ jobs:
         uses: docker/metadata-action@v3
         id: meta
         with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/nextcloud-cleanup
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}
           tags: |
             type=raw,value=latest,enable=${{ endsWith(GitHub.ref, 'main') }}
             type=ref,event=tag
-            type=sha
-            type=semver,pattern={{version}}
+            type=sha,enable=true,priority=100,prefix=,suffix=,format=short
           flavor: |
             latest=false
       - name: Build and push
@@ -45,11 +44,10 @@ jobs:
             VERSION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
             VCS_REF=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
           tags: ${{ steps.meta.outputs.tags }}
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/nextcloud-cleanup
-
-      # - name: Send GitHub Action data to Slack
-      #   uses: act10ns/slack@v1.2.2
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      #   with:
-      #     status: ${{ job.status }}
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}
+      - name: Update repo description
+        uses: peter-evans/dockerhub-description@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          repository: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}
