@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: nextcloud-cleanup
+  namespace: nextcloud
+spec:
+  schedule: "@hourly"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: nextcloud-cleanup
+              image: otherguy/nextcloud-cleanup:1.0.0
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - secretRef:
+                    name: nextcloud-cleanup-config
+          restartPolicy: OnFailure
