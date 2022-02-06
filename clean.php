@@ -42,9 +42,10 @@ $s3 = new S3Client([
   ]
 ]);
 
+// Get database instance
 $db = DB::getInstance(getenv('DATABASE_HOST'), getenv('DATABASE_USER'), getenv('DATABASE_PASSWORD'), getenv('DATABASE_NAME'));
 
-// Fetch
+// Query to fetch files to delete
 $query_leftover_uploads = <<<EOT
   SELECT `oc_filecache`.`fileid`, `oc_filecache`.`path`, `oc_filecache`.`parent`, `oc_storages`.`id` AS `storage`, `oc_filecache`.`size`
   FROM `oc_filecache`
@@ -57,6 +58,7 @@ $query_leftover_uploads = <<<EOT
   ) AND `oc_storages`.`available` = 1;
 EOT;
 
+// Fetch records
 $result = $db->query($query_leftover_uploads);
 $leftover_uploads  = $result->fetchAll();
 
@@ -84,7 +86,7 @@ foreach ($leftover_uploads as $file) {
   $db->delete('oc_filecache', ['fileid' => $file->fileid]);
 }
 
-// Delete all parent objects
+// Delete all parent objects from the db
 $parent_objects = array_unique($parent_objects);
 
 foreach ($parent_objects as $parent_object) {
