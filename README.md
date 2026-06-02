@@ -5,7 +5,7 @@ Nextcloud has several open issues ([#30762](https://github.com/nextcloud/server/
 left over chunks from bad or canceled uploads, when using S3 object storage as the primary
 backend.
 
-The [script itself](clean.php) is extremely simple and will clean up all chunks that are older
+The [script itself](clean.py) is extremely simple and will clean up all chunks that are older
 than a certain time limit.
 
 As I'm running Nextcloud on [Scaleway Kubernetes](https://www.scaleway.com/en/kubernetes-kapsule/)
@@ -19,7 +19,7 @@ The script was written for my own usecase and therefore currently only works wit
 
 * MySQL database (or MariaDB)
 * Nextcloud version 15 or higher
-* Docker, Kubernetes or local PHP 8+
+* Docker, Kubernetes or local Python 3
 
 ## Usage
 
